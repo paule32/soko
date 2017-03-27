@@ -43,7 +43,7 @@ QMAKE_CXXFLAGS += \
     -Wno-multichar \
     -Wno-sign-compare \
     -Wunused-function \
-    -Woverloaded-virtual -fpermissive \
+    -Woverloaded-virtual \
     -ftemplate-depth=$${TEMPLATE_DEPTH} \
     -frtti -fexceptions \
     -I/usr/local/include \
@@ -68,7 +68,8 @@ INCLUDEPATH += \
     /usr/include
 
 SOURCES += \
-    $${SRCDIR}/main.cc
+    $${SRCDIR}/main.cc \
+    $${SRCDIR}/getkey.c
 
 #HEADERS +=
 

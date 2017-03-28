@@ -1,5 +1,15 @@
 // (c) 2017 Jens Kallup
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+
+using namespace std;
 
 extern "C" {
     void clrscr(void);
@@ -32,11 +42,25 @@ char game_map[GAME_MAP_HEIGHT][GAME_MAP_WIDTH] = {
 { 1,2,2,2,2,2,2,2,2,2,2,2,2,2,3 },
 { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,3 }};
 
+std::vector<std::string> game_words {
+    "ANTON" ,
+    "AUTO"  ,
+    "BIKE"  ,
+    "JENS"  ,
+    "KEY"   ,
+    "SUMMER",
+    "WORD"  
+};
+
 int main()
 {
-    int c,r,key;
-    int xpos=0, ypos=0;
+    int c,r, key;
+    int xpos = 0;
+    int ypos = 0;
     
+    // -------------------------------------
+    // clear screen, and draw game field ...
+    // -------------------------------------
     clrscr();
     for (c = 0; c < GAME_MAP_HEIGHT; c++) {
     for (r = 0; r < GAME_MAP_WIDTH; r++) {
@@ -55,10 +79,49 @@ int main()
         }
     }   }
 
-    xpos += 2;
-    gotoxy(xpos,ypos);
+    // ----------------------------------
+    // set random word from word list ...
+    // ----------------------------------
+    srand(time(NULL));
+    int random_word = rand()%game_words.size();
+    std::string word = game_words[random_word];
     
-    // game loop
+    random_shuffle(word.begin(), word.end());
+
+    // -------------------------
+    // display shuffled word ...
+    // -------------------------
+    xpos = 4;
+    ypos = 4;
+    gotoxy(xpos, ypos);
+    std::cout << word << std::endl;
+
+    std::string found = "not";
+    
+    // -----------------------------
+    // try, to find the original ...
+    // -----------------------------
+    std::string str = game_words[random_word];
+    do {
+        if (word == str) {
+            found = "ok";
+            break;
+        }
+    } while (next_permutation(str.begin(), str.end()));
+
+    gotoxy(1,13) ;
+    std::cout << random_word
+              << " - "
+              << game_words[random_word]
+              << " - "
+              << word
+              << " : "
+              << found << std::endl ;
+      
+    // game loop - todo: game logic
+    ypos = 4;
+    gotoxy(xpos,ypos);
+
     while (1)
     {
         key = getkey();

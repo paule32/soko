@@ -116,11 +116,14 @@ int main()
                 gotoxy(  xpos+pos,ypos); printf("%c",chr);
             }
             else if (key == '8') {
+                printf(".");
                 if (ypos < 3) {
+                    printf(".");
                     ypos = GAME_MAP_HEIGHT-1;
                     gotoxy(xpos,++ypos);
                 }
-                gotoxy(xpos,  ypos); printf(".");
+
+                gotoxy(xpos,ypos); printf(".");
                 gotoxy(xpos,--ypos); printf("P");
             }
             else if (key == '2') {
